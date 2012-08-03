@@ -1,7 +1,7 @@
 Purpose
 =======
 
-This package provides two Sphinx (http://www.http://sphinx.pocoo.org/) extensions 
+This package provides two Sphinx (http://sphinx.pocoo.org/) extensions 
 to the Fortran (90) language:
 - sphinxfortran.fortran_domain: Sphinx domain for fortran.
 - sphinxfortran.fortran_autodoc: Auto-documenting fortran code.
