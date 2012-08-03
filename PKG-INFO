@@ -1,0 +1,21 @@
+Metadata-Version: 1.0
+Name: sphinxfortran
+Version: 0.1
+Summary: Fortran language extensions to sphinx
+Home-page: http://www.ifremer.fr/vacumm
+Author: Actimar / IFREMER
+Author-email: raynaud@actimar.fr
+License: CeCiLL
+Description: Fortran (90) language domain and auto-documenter for the Sphinx python documenter
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: CeCiLL
+Classifier: Programming Language :: Python :: 2
+Classifier: Topic :: Scientific/Engineering :: Physics
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Scientific/Engineering :: Atmospheric Science
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: UNIX
+Classifier: Operating System :: MacOS :: MacOS X
