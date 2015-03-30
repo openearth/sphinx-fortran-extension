@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 """Sphinx extension for autodocumenting fortran codes.
 
 
@@ -110,8 +110,14 @@ class F90toRst(object):
         import numpy.f2py.crackfortran
         self._verbose = numpy.f2py.crackfortran.verbose = verbose = vl
         numpy.f2py.crackfortran.quiet = quiet = 1-verbose
-        self.crack = crackfortran(ffiles)
-        
+
+        #self.crack = crackfortran(ffiles)
+        self.crack = []
+        for ff in ffiles:
+            f = crackfortran([ff])
+            if len(f) > 0:
+                self.crack.append(f[0])
+                                                                
         # Build index
         self.build_index()
         
@@ -159,6 +165,11 @@ class F90toRst(object):
         
         # Loop on all blocks and subblocks
         for block in self.crack:
+
+            if not block.has_key('vardescsearch'):
+                block['vardescsearch'] = lambda x: None
+            if not block.has_key('vardescmatch'):
+                block['vardescmatch'] = lambda x: None
             
             # Modules
             if block['block']=='module':
@@ -271,7 +282,12 @@ class F90toRst(object):
         """Scan """
         # Loop on all blocks
         for block in self.crack:
-            
+
+            if not block.has_key('vardescsearch'):
+                block['vardescsearch'] = lambda x: None
+            if not block.has_key('vardescmatch'):
+                block['vardescmatch'] = lambda x: None
+
             # Modules
             if block['block']=='module':
 
@@ -283,6 +299,11 @@ class F90toRst(object):
                 
                 # Scan types and routines
                 for subblock in block['body']:
+
+                    if not subblock.has_key('vardescsearch'):
+                        subblock['vardescsearch'] = lambda x: None
+                    if not subblock.has_key('vardescmatch'):
+                        subblock['vardescmatch'] = lambda x: None
 
                     self.scan_container(subblock, insrc=modsrc)
                     
@@ -342,7 +363,8 @@ class F90toRst(object):
                     elif line.strip() and varname is not None and \
                         (len(line)-len(line.strip()))>ifirst: # Description continuation?
                         
-                       block['vars'][varname]['desc'].append(' '+line.strip())
+#                       block['vars'][varname]['desc'].append(' '+line.strip())
+                       block['vars'][varname]['desc'] += ' '+line.strip()
                        
                     else: varname = None
                                         
@@ -862,6 +884,8 @@ class F90toRst(object):
         return self._fmt_vattr%locals() if vattr else ''
         
     def format_argtype(self, block):
+        if not block.has_key('typespec'):
+            return ''
         vtype = block['typespec']
         if vtype=='type': vtype = block['typename']
         return vtype

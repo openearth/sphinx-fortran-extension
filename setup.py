@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Inits
-from distutils.core import setup
+from setuptools import setup
     
 
 # Infos
