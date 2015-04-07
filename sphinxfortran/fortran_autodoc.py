@@ -851,8 +851,8 @@ class F90toRst(object):
             - *block*: a variable block
         """
         if block.has_key('dimension'):
-            return'(%s)'%(','.join([s.strip('()') for s in block['dimension']]))
-            #return'(%s)'%(','.join([s.replace(':','\:').strip('()') for s in block['dimension']]))
+            #return'(%s)'%(','.join([s.strip('()') for s in block['dimension']]))
+            return'(%s)'%(','.join([s.replace(':','\:').strip('()') for s in block['dimension']]))
         return ''
 
     def format_argattr(self, block):
@@ -935,7 +935,7 @@ class F90toRst(object):
     def get_varopts(self, block):
         """Get options for variable declaration as a dict"""
         options = {}
-        vdim = self.format_argdim(block)
+        vdim = self.format_argdim(block).replace('\\:',':')
         #if vdim!='': vdim = self._fmt_fvardim%locals()
         if vdim:
             options['shape'] = vdim
@@ -1304,7 +1304,7 @@ class FortranAutoModuleDirective(Directive):
         # Check module name
         module = self.arguments[0]
         if not f90torst.modules.has_key(module):
-            self.warn('Wrong fortran module name: '+module)
+            self.warning('Wrong fortran module name: '+module)
         
         # Options
         ic = f90torst.ic
